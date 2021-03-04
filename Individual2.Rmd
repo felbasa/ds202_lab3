@@ -1,0 +1,64 @@
+---
+title: "ds202_lab3"
+author: "Chris Anderson"
+date: "3/4/2021"
+output: html_document
+---
+
+library(dplyr)
+library(ggplot2)
+```{r}
+
+dat <- readxl::read_xls('/Users/ccand/Documents/ds202_HW/Lab3/GSS.xls')
+```
+
+#Question 1.
+#Find the average years of education for the respondents with each marital status. Arrange your output in a meaningful order and print. Describe any patterns you find.
+```{r}
+library(dplyr)
+
+data <- filter(dat, eduYears != "No answer" & eduYears != "Don't know")
+
+years <- as.numeric(data$eduYears)
+
+data %>%
+  group_by(Marital_status) %>%
+    summarize(
+      year_avg = mean(years))
+```
+
+#Question 2.
+#Create a single data frame containing records for the better educated respondents with each marital status. A “better educated” respondent is someone who has strictly more years of education than the average among those with the same marital status. Print the structure of the data frame.
+
+```{r}
+
+
+```
+
+
+#Question 3.
+#How is the happiness of a respondent related to his/her marriage status? Define that a person is happy if the response to question is “Very happy” or “Pretty happy”.
+
+```{r}
+library(ggplot2)
+happy <- filter(dat, happiness == "Pretty happy" | happiness == "Very happy")
+unhappy <- filter(dat, happiness == "Not too happy")
+
+#Respondents that responded Happy
+ggplot(happy, aes(x = Marital_status)) + geom_histogram(stat="count")
+
+
+
+
+```
+
+#Question 4.
+#Does party affiliation affect the relationship you found in the last question?
+
+
+#Question 5.
+#How is marrital status related to the education of a respondent? What are possible reasons accounting for the patterns you see?
+
+
+#Question 6.
+#Explore two more interesting questions, and answer those questions using the GSS data.
