@@ -1,0 +1,63 @@
+---
+title: "Team Report"
+author: "Felix Baez-Santiago, Chris Anderson, Austin Nebel"
+date: "3/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Imports
+```{r}
+library(dplyr)
+library(ggplot2)
+df <- readxl::read_xls("./GSS.xls")
+head(df)
+names(df)
+```
+
+# Question 1.
+Find the average years of education for the respondents with each marital status. Arrange your output in a meaningful order and print. Describe any patterns you find.
+```{r}
+
+```
+
+# Question 2.
+Create a single data frame containing records for the better educated respondents with each marital status. A “better educated” respondent is someone who has strictly more years of education than the average among those with the same marital status. Print the structure of the data frame.
+
+```{r}
+
+
+```
+
+
+# Question 3.
+How is the happiness of a respondent related to his/her marriage status? Define that a person is happy if the response to question is “Very happy” or “Pretty happy”.
+
+```{r}
+
+
+
+
+```
+
+# Question 4.
+Does party affiliation affect the relationship you found in the last question?
+```{r}
+
+
+```
+# Question 5.
+How is marrital status related to the education of a respondent? What are possible reasons accounting for the patterns you see?
+```{r}
+
+
+```
+# Question 6.
+Explore two more interesting questions, and answer those questions using the GSS data.
+```{r}
+
+
+```
