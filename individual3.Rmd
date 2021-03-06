@@ -1,0 +1,16 @@
+---
+title: "individual3"
+author: "Austin Nebel"
+date: "3/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r cars}
+dat <- readxl::read_xls('GSS.xls')
+```
+
