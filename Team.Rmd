@@ -21,7 +21,14 @@ names(df)
 # Question 1.
 Find the average years of education for the respondents with each marital status. Arrange your output in a meaningful order and print. Describe any patterns you find.
 ```{r}
+data <- filter(df, eduYears != "No answer" & eduYears != "Don't know")
 
+years <- as.numeric(data$eduYears)
+
+data %>%
+  group_by(Marital_status) %>%
+    summarize(
+      year_avg = mean(years))
 ```
 
 # Question 2.
@@ -37,8 +44,12 @@ Create a single data frame containing records for the better educated respondent
 How is the happiness of a respondent related to his/her marriage status? Define that a person is happy if the response to question is “Very happy” or “Pretty happy”.
 
 ```{r}
+happy <- filter(df, happiness == "Pretty happy" | happiness == "Very happy")
+unhappy <- filter(df, happiness == "Not too happy")
 
-
+#Respondents that responded Happy
+ggplot(happy, aes(x = Marital_status)) + geom_histogram(stat="count")
+ggplot(unhappy, aes(x = Marital_status)) + geom_histogram(stat="count")
 
 
 ```
