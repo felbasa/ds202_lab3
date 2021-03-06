@@ -13,20 +13,41 @@ Imports
 ```{r}
 library(dplyr)
 library(ggplot2)
+df <- readxl::read_xls("./GSS.xls")
+head(df)
+names(df)
+
+
+df <- df %>%
+  rename(gss = `Gss year for this respondent`, happy = `General happiness`, party = `Political party affiliation`, sex = `Respondents sex`, educ = `Highest year of school completed`, divorce = `Ever been divorced or separated`, marital_status = `Marital status`, employ = `Labor force status`, id = `Respondent id number`, ballot = `Ballot used for interview`, )
+df$highestSchool = as.numeric(as.character(df$educ))
 ```
 
 #Question 1.
 #Find the average years of education for the respondents with each marital status. Arrange your output in a meaningful order and print. Describe any patterns you find.
 ```{r}
+df %>%
+  mutate(avg_educ = as.numeric(educ)) %>%
+  na.omit %>% 
+  group_by(marital_status) %>%
+  summarize(mean(avg_educ)
+  )
 
+head(df)
 ```
 
 #Question 2.
 #Create a single data frame containing records for the better educated respondents with each marital status. A “better educated” respondent is someone who has strictly more years of education than the average among those with the same marital status. Print the structure of the data frame.
 
 ```{r}
+ques2 <- df %>%
+  mutate(avg_school_completed = as.numeric(educ)) %>%
+  na.omit %>% 
+  group_by(marital_status) %>%
+  summarize(betterEduc = (educ > avg_school_completed))
+str(ques2)
 
-
+names(df)
 ```
 
 
@@ -35,18 +56,31 @@ library(ggplot2)
 
 ```{r}
 
-
-
-
 ```
 
 #Question 4.
 #Does party affiliation affect the relationship you found in the last question?
+```{r}
 
 
+```
 #Question 5.
-#How is marrital status related to the education of a respondent? What are possible reasons accounting for the patterns you see?
-
-
+#How is marital status related to the education of a respondent? What are possible reasons accounting for the patterns you see?
+```{r}
+ggplot(df, aes(x = party, y = highestSchool)) + geom_boxplot() + theme(axis.text.x = element_text(angle = 90))
+```
 #Question 6.
 #Explore two more interesting questions, and answer those questions using the GSS data.
+```{r}
+ggplot(df, aes(x=sex, fill=happy))+geom_bar(position='fill')
+```
+
+Males and females reported very similar levels of happiness.
+
+```{r}
+ggplot(df, aes(x=sex, y=highestSchool))+geom_boxplot()
+names(df)
+```
+
+Females and Males have similar mean for their highest level of education, but males have a higher third quartile than females.
+```
