@@ -42,7 +42,6 @@ ques2 <- df %>%
   group_by(Marital_status) %>%
   summarize(betterEduc = (eduYears > avg_school_completed))
 str(ques2)
-
 ```
 
 
@@ -81,7 +80,6 @@ ms_to_years$eduYears <- as.numeric(ms_to_years$eduYears)
 head(ms_to_years)
 ggplot(ms_to_years, aes(x=Marital_status,y=eduYears)) + geom_boxplot()
 ggplot(ms_to_years, aes(x=Marital_status)) + geom_histogram(stat="count")
-
 ```
 
 I noticed that 'divorced' and 'never married' had the highest averages; this could be because they have more time to themselves and therefore more time to pursue education.
