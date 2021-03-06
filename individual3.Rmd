@@ -1,5 +1,5 @@
 ---
-title: "individual3"
+title: "Lab 3: Austin Nebel - Individual 3"
 author: "Austin Nebel"
 date: "3/4/2021"
 output: html_document
@@ -10,7 +10,49 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r cars}
-dat <- readxl::read_xls('GSS.xls')
+```{r}
+library(dplyr)
+library(ggplot2)
+df <- readxl::read_xls("./GSS.xls")
 ```
 
+
+# Question 3.
+How is the happiness of a respondent related to his/her marriage status? Define that a person is happy if the response to question is “Very happy” or “Pretty happy”.
+
+```{r}
+happy <- filter(df, (happiness == "Pretty happy" | happiness == "Very happy" | happiness == "Not too happy") & Marital_status != "No answer")
+
+ggplot(happy, aes(x = Marital_status, fill=happiness)) + geom_histogram(stat="count", position=position_dodge()) + ggtitle('Happy People')
+ggplot(happy, aes(x = Marital_status)) + geom_histogram(stat="count", position=position_dodge()) + ggtitle('Happy People')
+```
+
+There are more married people than all other groups. Every group's "Pretty happy" rating is higher than their "very happy" rating which is interesting. Separated people have the larges proportion of "Not too happy" compared to others.
+
+# Question 4.
+Does party affiliation affect the relationship you found in the last question?
+```{r}
+mp <- df[,c("Marital_status","party")]
+
+happy <- filter(df, happiness == "Pretty happy" | happiness == "Very happy") 
+unhappy <- filter(df, happiness == "Not too happy")
+
+#Respondents that responded Happy
+ggplot(happy, aes(x = Marital_status, fill=party)) + geom_histogram(stat="count", position=position_dodge()) + ggtitle('Happy People') + ylim(0,6000)
+ggplot(unhappy, aes(x = Marital_status, fill=party)) + geom_histogram(stat="count", position=position_dodge()) + ggtitle('Unhappy People') + ylim(0,6000)
+```
+
+# Question 5.
+How is marital status related to the education of a respondent? What are possible reasons accounting for the patterns you see?
+```{r}
+ms_to_years <- df[,c("Marital_status","eduYears")]
+ms_to_years <- filter(ms_to_years, eduYears != "No answer" & eduYears != "Don't know")
+ms_to_years <- filter(ms_to_years, Marital_status != "No answer")
+ms_to_years$eduYears <- as.numeric(ms_to_years$eduYears)
+head(ms_to_years)
+ggplot(ms_to_years, aes(x=Marital_status,y=eduYears)) + geom_boxplot()
+ggplot(ms_to_years, aes(x=Marital_status)) + geom_histogram(stat="count")
+
+```
+
+I noticed that 'divorced' and 'never married' had the highest averages; this could be because they have more time to themselves and therefore more time to pursue education.
